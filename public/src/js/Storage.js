@@ -1,34 +1,11 @@
-const categories = [
-  {
-    id: 1,
-    title: "frontend",
-    description: "frontend of applications",
-    createdAt: "2021-11-01T10:47:26.889Z",
-  },
-  {
-    id: 2,
-    title: "backend",
-    description: "backend of applications",
-    createdAt: "2021-10-01T10:47:26.889Z",
-  },
-];
-
 export default class Storage {
-  // add new category
-  // save category
-  // getAllCategories
-
   static getAllCategories() {
-    // product , category => get from localStorage
     const savedCategories =
       JSON.parse(localStorage.getItem("categories")) || [];
 
-    // sort => descending
-    const sortedCategories = savedCategories.sort((categoryA, categoryB) => {
+    return savedCategories.sort((categoryA, categoryB) => {
       return new Date(categoryB.createdAt) - new Date(categoryA.createdAt);
     });
-
-    return sortedCategories;
   }
 
   static saveCategory(categoryToSave) {
@@ -46,5 +23,31 @@ export default class Storage {
     }
 
     localStorage.setItem("categories", JSON.stringify(categories));
+  }
+
+  static getAllProducts() {
+    const savedProducts = JSON.parse(localStorage.getItem("products")) || [];
+
+    return savedProducts.sort((productA, productB) => {
+      return new Date(productB.createdAt) - new Date(productA.createdAt);
+    });
+  }
+
+  static saveProduct(productToSave) {
+    const products = this.getAllProducts();
+
+    const existedItem = products.find((c) => c.id === productToSave.id);
+
+    if (existedItem) {
+      existedItem.title = productToSave.title;
+      existedItem.quantity = productToSave.quantity;
+      existedItem.category = productToSave.category;
+    } else {
+      productToSave.id = new Date().getTime();
+      productToSave.createdAt = new Date().toISOString();
+      products.push(productToSave);
+    }
+
+    localStorage.setItem("products", JSON.stringify(products));
   }
 }
