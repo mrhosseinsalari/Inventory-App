@@ -30,4 +30,21 @@ export default class Storage {
 
     return sortedCategories;
   }
+
+  static saveCategory(categoryToSave) {
+    const categories = this.getAllCategories();
+
+    const existedItem = categories.find((c) => c.id === categoryToSave.id);
+
+    if (existedItem) {
+      existedItem.title = categoryToSave.title;
+      existedItem.description = categoryToSave.description;
+    } else {
+      categoryToSave.id = new Date().getTime();
+      categoryToSave.createdAt = new Date().toISOString();
+      categories.push(categoryToSave);
+    }
+
+    localStorage.setItem("categories", JSON.stringify(categories));
+  }
 }
