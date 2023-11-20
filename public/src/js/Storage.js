@@ -36,7 +36,7 @@ export default class Storage {
   static saveProduct(productToSave) {
     const products = this.getAllProducts();
 
-    const existedItem = products.find((c) => c.id === productToSave.id);
+    const existedItem = products.find((p) => p.id === productToSave.id);
 
     if (existedItem) {
       existedItem.title = productToSave.title;
