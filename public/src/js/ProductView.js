@@ -5,11 +5,13 @@ const quantityInput = document.querySelector("#product-quantity");
 const categorySelectOption = document.querySelector("#product-category");
 const addNewProductBtn = document.querySelector("#add-new-product");
 const productsList = document.querySelector("#products-list");
+const searchInput = document.querySelector("#search-input");
 
 class ProductView {
   constructor() {
     this.products = [];
     addNewProductBtn.addEventListener("click", (e) => this.addNewProduct(e));
+    searchInput.addEventListener("input", (e) => this.searchProducts(e));
   }
 
   setApp() {
@@ -29,17 +31,17 @@ class ProductView {
     this.products = Storage.getAllProducts();
 
     // update DOM : update products list
-    this.createProductsList();
+    this.createProductsList(this.products);
 
     [titleInput, quantityInput].forEach((item) => {
       item.value = "";
     });
   }
 
-  createProductsList() {
+  createProductsList(products) {
     let result = "";
 
-    this.products.forEach((product) => {
+    products.forEach((product) => {
       const selectedCategory = Storage.getAllCategories().find(
         (c) => c.id === Number(product.category)
       );
@@ -66,6 +68,16 @@ class ProductView {
     });
 
     productsList.innerHTML = result;
+  }
+
+  searchProducts(e) {
+    const value = e.target.value.trim().toLowerCase();
+
+    const filteredProducts = this.products.filter((p) =>
+      p.title.toLowerCase().includes(value)
+    );
+
+    this.createProductsList(filteredProducts);
   }
 }
 
