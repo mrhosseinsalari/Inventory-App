@@ -3,7 +3,7 @@ import Storage from "./Storage.js";
 const titleInput = document.querySelector("#category-title");
 const descriptionInput = document.querySelector("#category-description");
 const addNewCategoryBtn = document.querySelector("#add-new-category");
-const categoriesList = document.querySelector("#product-categories");
+const categoriesList = document.querySelector("#product-category");
 
 class CategoryView {
   constructor() {

@@ -47,27 +47,19 @@
             <input type="number" name="product-quantity" id="product-quantity" class="bg-transparent rounded-xl border border-slate-500 text-slate-400">
           </div>
           <div>
-            <label for="product-categories" class="block mb-1 text-slate-400">category</label>
-            <select name="product-categories" id="product-categories" class="bg-transparent rounded-xl border border-slate-500 text-slate-400 w-full"></select>
+            <label for="product-category" class="block mb-1 text-slate-400">category</label>
+            <select name="product-category" id="product-category" class="bg-transparent rounded-xl border border-slate-500 text-slate-400 w-full"></select>
           </div>
           <div class="flex items-center justify-between gap-x-4">
-            <button class="flex-1 bg-slate-500 text-slate-200 rounded-xl py-2">Add new Product</button>
+            <button id="add-new-product" class="flex-1 bg-slate-500 text-slate-200 rounded-xl py-2">Add new Product</button>
           </div>
         </form>
       </div>
 
-      <!-- product-list -->
+      <!-- products-list -->
       <div class="mb-10">
-        <h2 class="text-xl text-slate-300 font-bold mb-2">Product List</h2>
-        <div class="flex items-center justify-between">
-          <span class="text-slate-400">Ideapad gaming 3</span>
-          <div class="flex items-center gap-x-3">
-            <span class="text-slate-400">date</span>
-            <span class="block px-3 py-0.5 text-slate-400 border border-slate-400 rounded-2xl text-sm">laptop</span>
-            <span class="flex items-center justify-center w-7 h-7 rounded-full bg-slate-500 border-2 border-slate-400 text-slate-300">7</span>
-            <button class="border px-2 py-0.5 rounded-2xl border-red-400 text-red-400">delete</button>
-          </div>
-        </div>
+        <h2 class="text-xl text-slate-300 font-bold mb-4">Products List</h2>
+        <div id="products-list" class="flex flex-col gap-y-4"></div>
       </div>
     </div>
 
