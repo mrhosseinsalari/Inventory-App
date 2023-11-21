@@ -25,11 +25,14 @@ export default class Storage {
     localStorage.setItem("categories", JSON.stringify(categories));
   }
 
-  static getAllProducts() {
+  static getAllProducts(sort = "newest") {
     const savedProducts = JSON.parse(localStorage.getItem("products")) || [];
 
     return savedProducts.sort((productA, productB) => {
-      return new Date(productB.createdAt) - new Date(productA.createdAt);
+      if (sort === "newest")
+        return new Date(productB.createdAt) - new Date(productA.createdAt);
+      if (sort === "oldest")
+        return new Date(productA.createdAt) - new Date(productB.createdAt);
     });
   }
 
