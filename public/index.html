@@ -8,34 +8,37 @@
   </head>
   <body class="bg-slate-800 min-h-screen">
     <!-- app-bar -->
-    <div class="h-12 flex items-center justify-center gap-x-4 bg-slate-700 mb-6">
+    <section class="h-12 flex items-center justify-center gap-x-4 bg-slate-700 mb-6">
       <h1 class="text-xl font-bold text-slate-300">Inventory App</h1>
       <span class="flex items-center justify-center w-7 h-7 rounded-full bg-slate-500 border-2 border-slate-400 font-bold text-slate-300">7</span>
-    </div>
+    </section>
 
     <!-- app-content -->
-    <div class="container mx-auto max-w-screen-sm">
+    <section class="container mx-auto max-w-screen-sm">
       <!-- category-form -->
-      <div class="mb-6">
-        <h2 class="text-xl text-slate-300 font-bold mb-2">Add New Category</h2>
-        <form class="bg-slate-700 p-4 rounded-xl flex flex-col gap-y-4">
-          <div>
-            <label for="category-title" class="block mb-1 text-slate-400">title</label>
-            <input type="text" name="category-title" id="category-title" class="bg-transparent rounded-xl border border-slate-500 text-slate-400">
-          </div>
-          <div>
-            <label for="category-description" class="block mb-1 text-slate-400">description</label>
-            <textarea type="text" name="category-description" id="category-description" class="bg-transparent rounded-xl border border-slate-500 text-slate-400 w-full resize-none"></textarea>
-          </div>
-          <div class="flex items-center justify-between gap-x-4">
-            <button class="flex-1 border border-slate-400 text-slate-400 rounded-xl py-2">Cancel</button>
-            <button id="add-new-category" class="flex-1 bg-slate-500 text-slate-200 rounded-xl py-2">Add new Category</button>
-          </div>
-        </form>
-      </div>
+      <section class="mb-6">
+        <div class="hidden" id="category-wrapper">
+          <h2 class="text-xl text-slate-300 font-bold mb-2">Add New Category</h2>
+          <form class="bg-slate-700 p-4 rounded-xl flex flex-col gap-y-4">
+            <div>
+              <label for="category-title" class="block mb-1 text-slate-400">title</label>
+              <input type="text" name="category-title" id="category-title" class="bg-transparent rounded-xl border border-slate-500 text-slate-400">
+            </div>
+            <div>
+              <label for="category-description" class="block mb-1 text-slate-400">description</label>
+              <textarea type="text" name="category-description" id="category-description" class="bg-transparent rounded-xl border border-slate-500 text-slate-400 w-full resize-none"></textarea>
+            </div>
+            <div class="flex items-center justify-between gap-x-4">
+              <button id="cancel-add-category" class="flex-1 border border-slate-400 text-slate-400 rounded-xl py-2">Cancel</button>
+              <button id="add-new-category" class="flex-1 bg-slate-500 text-slate-200 rounded-xl py-2">Add new Category</button>
+            </div>
+          </form>
+        </div>
+        <button id="toggle-add-category" class="text-slate-600 text-lg font-medium">Add new Category ?</button>
+      </section>
 
       <!-- product-form -->
-      <div class="mb-6">
+      <section class="mb-6">
         <h2 class="text-xl text-slate-300 font-bold mb-2">Add New Product</h2>
         <form class="bg-slate-700 p-4 rounded-xl flex flex-col gap-y-4">
           <div>
@@ -54,10 +57,10 @@
             <button id="add-new-product" class="flex-1 bg-slate-500 text-slate-200 rounded-xl py-2">Add new Product</button>
           </div>
         </form>
-      </div>
+      </section>
 
       <!-- products-list -->
-      <div class="mb-10">
+      <section class="mb-10">
         <h2 class="text-xl text-slate-300 font-bold mb-4">Products List</h2>
         <div class="flex items-center justify-between mb-6">
           <label for="search-input" class="text-slate-500 text-lg font-bold">search</label>
@@ -71,8 +74,8 @@
           </select>
         </div>
         <div id="products-list" class="flex flex-col gap-y-4"></div>
-      </div>
-    </div>
+      </section>
+    </section>
 
     <script type="module" src="./src/js/app.js"></script>
   </body>
