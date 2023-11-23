@@ -8,6 +8,7 @@ const productsList = document.querySelector("#products-list");
 
 const searchInput = document.querySelector("#search-input");
 const selectedSort = document.querySelector("#sort-products");
+const numberOfProducts = document.querySelector("#numberOfProducts");
 
 class ProductView {
   constructor() {
@@ -19,6 +20,7 @@ class ProductView {
 
   setApp() {
     this.products = Storage.getAllProducts();
+    numberOfProducts.textContent = this.products.length;
   }
 
   addNewProduct(e) {
@@ -35,6 +37,7 @@ class ProductView {
 
     // update DOM : update products list
     this.createProductsList(this.products);
+    numberOfProducts.textContent = this.products.length;
 
     [titleInput, quantityInput, searchInput].forEach((item) => {
       item.value = "";
@@ -63,7 +66,7 @@ class ProductView {
             <span class="flex items-center justify-center w-7 h-7 rounded-full bg-slate-500 border-2 border-slate-400 text-slate-300">${
               product.quantity
             }</span>
-            <button class="border px-2 py-0.5 rounded-2xl border-red-400 text-red-400" data-product-id="${
+            <button class="delete-product border px-2 py-0.5 rounded-2xl border-red-400 text-red-400" data-product-id="${
               product.id
             }">delete</button>
           </div>
@@ -72,6 +75,11 @@ class ProductView {
     });
 
     productsList.innerHTML = result;
+
+    const deleteProductBtns = document.querySelectorAll(".delete-product");
+    deleteProductBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => this.deleteProduct(e));
+    });
   }
 
   searchProducts(e) {
@@ -89,6 +97,17 @@ class ProductView {
     this.products = Storage.getAllProducts(value);
     this.createProductsList(this.products);
     searchInput.value = "";
+  }
+
+  deleteProduct(e) {
+    e.preventDefault();
+
+    const productId = Number(e.target.dataset.productId);
+    Storage.deleteProduct(productId);
+
+    this.products = Storage.getAllProducts();
+    this.createProductsList(this.products);
+    numberOfProducts.textContent = this.products.length;
   }
 }
 
