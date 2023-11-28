@@ -14,11 +14,11 @@
     </section>
 
     <!-- app-content -->
-    <section class="container mx-auto max-w-screen-sm">
+    <section class="container mx-auto max-w-screen-sm px-2 min-[375px]:px-4 sm:px-0">
       <!-- category-form -->
       <section class="mb-6">
         <div class="hidden" id="category-wrapper">
-          <h2 class="text-xl text-slate-300 font-bold mb-2">Add New Category</h2>
+          <h2 class="text-lg sm:text-xl text-slate-300 font-bold mb-2">Add New Category</h2>
           <form class="bg-slate-700 p-4 rounded-xl flex flex-col gap-y-4">
             <div>
               <label for="category-title" class="block mb-1 text-slate-400">title</label>
@@ -29,8 +29,8 @@
               <textarea type="text" name="category-description" id="category-description" class="bg-transparent rounded-xl border border-slate-500 text-slate-400 w-full resize-none"></textarea>
             </div>
             <div class="flex items-center justify-between gap-x-4">
-              <button id="cancel-add-category" class="flex-1 border border-slate-400 text-slate-400 rounded-xl py-2">Cancel</button>
-              <button id="add-new-category" class="flex-1 bg-slate-500 text-slate-200 rounded-xl py-2">Add new Category</button>
+              <button id="cancel-add-category" class="flex-1 border border-slate-400 text-slate-400 rounded-lg sm:rounded-xl py-2 text-sm sm:text-base">Cancel</button>
+              <button id="add-new-category" class="flex-1 bg-slate-500 text-slate-200 rounded-lg sm:rounded-xl py-2 text-sm sm:text-base">Add new Category</button>
             </div>
           </form>
         </div>
@@ -39,7 +39,7 @@
 
       <!-- product-form -->
       <section class="mb-6">
-        <h2 class="text-xl text-slate-300 font-bold mb-2">Add New Product</h2>
+        <h2 class="text-lg sm:text-xl text-slate-300 font-bold mb-2">Add New Product</h2>
         <form class="bg-slate-700 p-4 rounded-xl flex flex-col gap-y-4">
           <div>
             <label for="product-title" class="block mb-1 text-slate-400">title</label>
@@ -54,21 +54,21 @@
             <select name="product-category" id="product-category" class="bg-transparent rounded-xl border border-slate-500 text-slate-400 w-full"></select>
           </div>
           <div class="flex items-center justify-between gap-x-4">
-            <button id="add-new-product" class="flex-1 bg-slate-500 text-slate-200 rounded-xl py-2">Add new Product</button>
+            <button id="add-new-product" class="flex-1 bg-slate-500 text-slate-200 rounded-lg sm:rounded-xl py-2 text-sm sm:text-base">Add new Product</button>
           </div>
         </form>
       </section>
 
       <!-- products-list -->
       <section class="mb-10">
-        <h2 class="text-xl text-slate-300 font-bold mb-4">Products List</h2>
+        <h2 class="text-lg sm:text-xl text-slate-300 font-bold mb-4">Products List</h2>
         <div class="flex items-center justify-between mb-6">
-          <label for="search-input" class="text-slate-500 text-lg font-bold">search</label>
-          <input type="text" name="search-input" id="search-input" class="bg-transparent rounded-xl border border-slate-500 text-slate-400">
+          <label for="search-input" class="text-slate-500 sm:text-lg font-bold">search</label>
+          <input type="text" name="search-input" id="search-input" class="bg-transparent rounded-xl border border-slate-500 text-slate-400 py-1.5 px-2.5 sm:py-2 sm:px-3">
         </div>
         <div class="flex items-center justify-between mb-6">
-          <label for="sort-products" class="text-slate-500 text-lg font-bold">sort</label>
-          <select name="sort-products" id="sort-products" class="bg-transparent rounded-xl border border-slate-500 text-slate-400">
+          <label for="sort-products" class="text-slate-500 sm:text-lg font-bold">sort</label>
+          <select name="sort-products" id="sort-products" class="bg-transparent rounded-xl border border-slate-500 text-slate-400 text-sm sm:text-base py-1.5 sm:py-2">
             <option class="bg-slate-500 text-slate-300" selected value="newest">newest</option>
             <option class="bg-slate-500 text-slate-300" value="oldest">oldest</option>
           </select>
