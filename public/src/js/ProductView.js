@@ -66,7 +66,7 @@ class ProductView {
             <span class="flex items-center justify-center w-6 h-6 min-[425px]:w-7 min-[425px]:h-7 rounded-full bg-slate-500 border-2 border-slate-400 text-slate-300">${
               product.quantity
             }</span>
-            <button class="edit-product border px-2 py-0.5 rounded-2xl border-yellow-400 text-yellow-400" data-product-id="${
+            <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="edit-product border px-2 py-0.5 rounded-2xl border-yellow-400 text-yellow-400" data-product-id="${
               product.id
             }">edit</button>
             <button class="delete-product border px-2 py-0.5 rounded-2xl border-red-400 text-red-400" data-product-id="${
