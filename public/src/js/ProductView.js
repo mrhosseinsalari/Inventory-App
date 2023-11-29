@@ -10,12 +10,29 @@ const searchInput = document.querySelector("#search-input");
 const selectedSort = document.querySelector("#sort-products");
 const numberOfProducts = document.querySelector("#numberOfProducts");
 
+const backdrop = document.querySelector("#backdrop");
+const editProductModal = document.querySelector("#edit-product-modal");
+const closeModalBtn = document.querySelector("#close-modal");
+
+const editTitleInput = document.querySelector("#edit-product-title");
+const editQuantityInput = document.querySelector("#edit-product-quantity");
+const editCategorySelect = document.querySelector("#edit-product-category");
+const editProductBtn = document.querySelector("#edit-product-btn");
+
 class ProductView {
   constructor() {
     this.products = [];
     addNewProductBtn.addEventListener("click", (e) => this.addNewProduct(e));
     searchInput.addEventListener("input", (e) => this.searchProducts(e));
     selectedSort.addEventListener("change", (e) => this.sortProducts(e));
+    closeModalBtn.addEventListener("click", () => this.closeEditProductModal());
+
+    editProductBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const productId = Number(e.target.dataset.productId);
+      this.editProduct(productId);
+    });
   }
 
   setApp() {
@@ -66,7 +83,7 @@ class ProductView {
             <span class="flex items-center justify-center w-6 h-6 min-[425px]:w-7 min-[425px]:h-7 rounded-full bg-slate-500 border-2 border-slate-400 text-slate-300">${
               product.quantity
             }</span>
-            <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="edit-product border px-2 py-0.5 rounded-2xl border-yellow-400 text-yellow-400" data-product-id="${
+            <button class="edit-product border px-2 py-0.5 rounded-2xl border-yellow-400 text-yellow-400" data-product-id="${
               product.id
             }">edit</button>
             <button class="delete-product border px-2 py-0.5 rounded-2xl border-red-400 text-red-400" data-product-id="${
@@ -82,6 +99,11 @@ class ProductView {
     const deleteProductBtns = document.querySelectorAll(".delete-product");
     deleteProductBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => this.deleteProduct(e));
+    });
+
+    const editProductBtns = document.querySelectorAll(".edit-product");
+    editProductBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => this.showEditProductModal(e));
     });
   }
 
@@ -111,6 +133,39 @@ class ProductView {
     this.products = Storage.getAllProducts();
     this.createProductsList(this.products);
     numberOfProducts.textContent = this.products.length;
+  }
+
+  editProduct(productId) {
+    const title = editTitleInput.value.trim();
+    const quantity = editQuantityInput.value.trim();
+    const category = editCategorySelect.value;
+
+    if (!title || !quantity || !category) return;
+
+    Storage.saveProduct({ id: productId, title, quantity, category });
+    this.products = Storage.getAllProducts();
+    this.createProductsList(this.products);
+    this.closeEditProductModal();
+  }
+
+  showEditProductModal(e) {
+    backdrop.classList.remove("hidden");
+    editProductModal.classList.remove("-translate-y-full", "opacity-0");
+    editProductModal.classList.add("translate-y-[25vh]", "opacity-1");
+
+    const productId = Number(e.target.dataset.productId);
+    const product = this.products.find((p) => p.id === productId);
+
+    editTitleInput.value = product.title;
+    editQuantityInput.value = product.quantity;
+    editCategorySelect.value = product.category;
+    editProductBtn.dataset.productId = product.id;
+  }
+
+  closeEditProductModal() {
+    backdrop.classList.add("hidden");
+    editProductModal.classList.add("-translate-y-full", "opacity-0");
+    editProductModal.classList.remove("translate-y-[25vh]", "opacity-1");
   }
 }
 

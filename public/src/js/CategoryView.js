@@ -4,6 +4,7 @@ const titleInput = document.querySelector("#category-title");
 const descriptionInput = document.querySelector("#category-description");
 const addNewCategoryBtn = document.querySelector("#add-new-category");
 const categoriesList = document.querySelector("#product-category");
+const editCategorySelect = document.querySelector("#edit-product-category");
 
 const toggleAddCategoryBtn = document.querySelector("#toggle-add-category");
 const categoryWrapper = document.querySelector("#category-wrapper");
@@ -56,6 +57,7 @@ class CategoryView {
     });
 
     categoriesList.innerHTML = result;
+    editCategorySelect.innerHTML = result;
   }
 
   toggleCategoryForm(visibility) {
