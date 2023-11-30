@@ -2,7 +2,7 @@ import Storage from "./Storage.js";
 
 const titleInput = document.querySelector("#product-title");
 const quantityInput = document.querySelector("#product-quantity");
-const categorySelectOption = document.querySelector("#product-category");
+const categoryInput = document.querySelector("#product-category");
 const addNewProductBtn = document.querySelector("#add-new-product");
 const productsList = document.querySelector("#products-list");
 
@@ -16,7 +16,7 @@ const closeModalBtn = document.querySelector("#close-modal");
 
 const editTitleInput = document.querySelector("#edit-product-title");
 const editQuantityInput = document.querySelector("#edit-product-quantity");
-const editCategorySelect = document.querySelector("#edit-product-category");
+const editCategoryInput = document.querySelector("#edit-product-category");
 const editProductBtn = document.querySelector("#edit-product-btn");
 
 class ProductView {
@@ -30,35 +30,40 @@ class ProductView {
     editProductBtn.addEventListener("click", (e) => {
       e.preventDefault();
 
-      const productId = Number(e.target.dataset.productId);
+      const productId = e.target.dataset.productId;
       this.editProduct(productId);
     });
   }
 
-  setApp() {
-    this.products = Storage.getAllProducts();
+  setApp(sort = "newest") {
+    this.products = Storage.getAllProducts(sort);
+    this.createProductsList(this.products);
     numberOfProducts.textContent = this.products.length;
+  }
+
+  createProductItem(titleInput, quantityInput, categoryInput) {
+    const title = titleInput.value.trim();
+    const quantity = quantityInput.value.trim();
+    const category = categoryInput.value.trim();
+
+    if (!title || !quantity || !category) return;
+
+    return { title, quantity, category };
   }
 
   addNewProduct(e) {
     e.preventDefault();
 
-    const title = titleInput.value.trim();
-    const quantity = quantityInput.value.trim();
-    const category = categorySelectOption.value;
+    Storage.saveProduct(
+      this.createProductItem(titleInput, quantityInput, categoryInput)
+    );
 
-    if (!title || !quantity || !category) return;
-
-    Storage.saveProduct({ title, quantity, category });
-    this.products = Storage.getAllProducts();
-
-    // update DOM : update products list
-    this.createProductsList(this.products);
-    numberOfProducts.textContent = this.products.length;
+    this.setApp();
 
     [titleInput, quantityInput, searchInput].forEach((item) => {
       item.value = "";
     });
+
     selectedSort.value = "newest";
   }
 
@@ -119,33 +124,37 @@ class ProductView {
 
   sortProducts(e) {
     const value = e.target.value;
-    this.products = Storage.getAllProducts(value);
-    this.createProductsList(this.products);
+    this.setApp(value);
     searchInput.value = "";
   }
 
   deleteProduct(e) {
     e.preventDefault();
 
-    const productId = Number(e.target.dataset.productId);
+    const productId = e.target.dataset.productId;
     Storage.deleteProduct(productId);
-
-    this.products = Storage.getAllProducts();
-    this.createProductsList(this.products);
-    numberOfProducts.textContent = this.products.length;
+    this.setApp();
   }
 
   editProduct(productId) {
-    const title = editTitleInput.value.trim();
-    const quantity = editQuantityInput.value.trim();
-    const category = editCategorySelect.value;
+    const updatedProduct = this.createProductItem(
+      editTitleInput,
+      editQuantityInput,
+      editCategoryInput
+    );
 
-    if (!title || !quantity || !category) return;
-
-    Storage.saveProduct({ id: productId, title, quantity, category });
-    this.products = Storage.getAllProducts();
-    this.createProductsList(this.products);
+    Storage.saveProduct({ id: productId, ...updatedProduct });
+    this.setApp();
     this.closeEditProductModal();
+  }
+
+  setEditFormValues(productId) {
+    const product = this.products.find((p) => p.id === Number(productId));
+
+    editTitleInput.value = product.title;
+    editQuantityInput.value = product.quantity;
+    editCategoryInput.value = product.category;
+    editProductBtn.dataset.productId = product.id;
   }
 
   showEditProductModal(e) {
@@ -153,13 +162,8 @@ class ProductView {
     editProductModal.classList.remove("-translate-y-full", "opacity-0");
     editProductModal.classList.add("translate-y-[25vh]", "opacity-1");
 
-    const productId = Number(e.target.dataset.productId);
-    const product = this.products.find((p) => p.id === productId);
-
-    editTitleInput.value = product.title;
-    editQuantityInput.value = product.quantity;
-    editCategorySelect.value = product.category;
-    editProductBtn.dataset.productId = product.id;
+    const productId = e.target.dataset.productId;
+    this.setEditFormValues(productId);
   }
 
   closeEditProductModal() {

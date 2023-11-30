@@ -36,10 +36,14 @@ export default class Storage {
     });
   }
 
+  static saveProducts(products) {
+    localStorage.setItem("products", JSON.stringify(products));
+  }
+
   static saveProduct(productToSave) {
     const products = this.getAllProducts();
 
-    const existedItem = products.find((p) => p.id === productToSave.id);
+    const existedItem = products.find((p) => p.id === Number(productToSave.id));
 
     if (existedItem) {
       existedItem.title = productToSave.title;
@@ -51,13 +55,12 @@ export default class Storage {
       products.push(productToSave);
     }
 
-    localStorage.setItem("products", JSON.stringify(products));
+    this.saveProducts(products);
   }
 
   static deleteProduct(id) {
     const savedProducts = this.getAllProducts();
-    const filteredProducts = savedProducts.filter((p) => p.id !== id);
-
-    localStorage.setItem("products", JSON.stringify(filteredProducts));
+    const filteredProducts = savedProducts.filter((p) => p.id !== Number(id));
+    this.saveProducts(filteredProducts);
   }
 }

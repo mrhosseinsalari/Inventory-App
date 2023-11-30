@@ -3,8 +3,7 @@ import Storage from "./Storage.js";
 const titleInput = document.querySelector("#category-title");
 const descriptionInput = document.querySelector("#category-description");
 const addNewCategoryBtn = document.querySelector("#add-new-category");
-const categoriesList = document.querySelector("#product-category");
-const editCategorySelect = document.querySelector("#edit-product-category");
+const categoriesList = document.querySelectorAll(".categories-list");
 
 const toggleAddCategoryBtn = document.querySelector("#toggle-add-category");
 const categoryWrapper = document.querySelector("#category-wrapper");
@@ -27,6 +26,7 @@ class CategoryView {
 
   setApp() {
     this.categories = Storage.getAllCategories();
+    this.createCategoriesList();
   }
 
   addNewCategory(e) {
@@ -37,10 +37,7 @@ class CategoryView {
     if (!title || !description) return;
 
     Storage.saveCategory({ title, description });
-    this.categories = Storage.getAllCategories();
-
-    // update DOM : update select option in categories
-    this.createCategoriesList();
+    this.setApp();
 
     [titleInput, descriptionInput].forEach((item) => {
       item.value = "";
@@ -56,8 +53,9 @@ class CategoryView {
       result += `<option class="bg-slate-500 text-slate-300" value="${category.id}">${category.title}</option>`;
     });
 
-    categoriesList.innerHTML = result;
-    editCategorySelect.innerHTML = result;
+    categoriesList.forEach((list) => {
+      list.innerHTML = result;
+    });
   }
 
   toggleCategoryForm(visibility) {
